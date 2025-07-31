@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Car Crash Test - Clean Version</title>
+
+  <!-- ✅ Place your Google Analytics Code below -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'YOUR_GA_ID');
+  </script> -->
+
+  <!-- ✅ Place your AdSense Code below -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR_ADSENSE_ID" crossorigin="anonymous"></script> -->
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      overflow: hidden;
+    }
+    #unity-canvas {
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="unity-canvas"></canvas>
+  <div id="loading" style="color:white; text-align:center; padding-top:20px;">Loading Game...</div>
+
+  <script>
+    const buildUrl = "./Build";
+    const config = {
+      dataUrl: buildUrl + "/cct.data.unityweb",
+      frameworkUrl: buildUrl + "/cct.js.unityweb",
+      codeUrl: buildUrl + "/cct.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "JustPlay",
+      productName: "CarCrashTest",
+      productVersion: "1.0",
+    };
+
+    const canvas = document.querySelector("#unity-canvas");
+    const script = document.createElement("script");
+    script.src = buildUrl + "/cct.js";
+    script.onload = () => {
+      createUnityInstance(canvas, config, (progress) => {
+        document.getElementById("loading").innerText = "Loading: " + Math.round(progress * 100) + "%";
+      }).then(() => {
+        document.getElementById("loading").style.display = "none";
+      }).catch((err) => {
+        alert("Failed to load game: " + err);
+      });
+    };
+    document.body.appendChild(script);
+  </script>
+</body>
+</html>
